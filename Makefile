@@ -24,6 +24,7 @@ OAUTH_GOOGLE_SECRET   ?= ''
 
 # Database Credentials
 DB_HOST ?= postgresql
+DB_SCHEMA ?= project_x
 DB_USER ?= ''
 DB_PASS ?= ''
 
@@ -53,6 +54,7 @@ test: ## Test built LOCAL_IMAGE (NAME:RELEASE_VERSION).
 		-e OAUTH_GOOGLE_KEY=$(OAUTH_GOOGLE_KEY) \
 		-e OAUTH_GOOGLE_SECRET=$(OAUTH_GOOGLE_SECRET) \
 		-e DB_HOST=$(DB_HOST) \
+		-e DB_SCHEMA=$(DB_SCHEMA) \
 		-e DB_USER=$(DB_USER) \
 		-e DB_PASS=$(DB_PASS) \
 		--entrypoint=carton mojo exec prove -lv
@@ -76,6 +78,7 @@ run: build ## Run the Application Docker Compose in the local machine.
 	OAUTH_GOOGLE_KEY=$(OAUTH_GOOGLE_KEY) \
 	OAUTH_GOOGLE_SECRET=$(OAUTH_GOOGLE_SECRET) \
 	DB_HOST=$(DB_HOST) \
+	DB_SCHEMA=$(DB_SCHEMA) \
 	DB_USER=$(DB_USER) \
 	DB_PASS=$(DB_PASS) \
 	docker-compose up --force-recreate

@@ -2,6 +2,12 @@ package X;
 use Mojo::Base 'Mojolicious';
 use v5.24; use feature qw(signatures);
 no warnings qw(experimental::signatures);
+use X::Schema;
+
+# TODO: handle ping, reconnect
+has schema => sub {
+        return X::Schema->connect_with_env_info();
+    };
 
 # This method will run once at server start
 sub startup($app) {
@@ -56,6 +62,8 @@ sub setup_helpers {
     my $app = shift;
 
     $app->helper( 'user_email' => sub { shift->session( 'email', shift//() ) } );
+    $app->helper(db => sub { $app->app->schema });
+
 }
 
 1;
